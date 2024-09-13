@@ -1,0 +1,17 @@
+[
+  {
+    "developerId": "34e96e48-d7e9-4c60-aee1-eefb02acd171",
+    "userName": "tyler",
+    "firstName": "Tyler",
+    "lastName": "Ayers",
+    "email": "tyler.ayers@gmail.com",
+    "status": "active",
+    "attributes": [
+      {
+        "name": "sample_attribute_0",
+        "value": "sample_attribute_value_0"
+      }
+    ],
+    "apps": []
+  }
+]

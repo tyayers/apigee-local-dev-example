@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="default">
+  <PreFlow name="PreFlow">
+    <Request>
+      <Step>
+        <Name>VerifyOAuthToken</Name>
+      </Step>
+    </Request>
+  </PreFlow>
+  <Flows>
+    <Flow name="getTrades">
+      <Description/>
+      <Condition>request.verb = "GET" and proxy.pathsuffix MatchesPath "/trades"</Condition>
+    </Flow>
+    <Flow name="createTrade">
+      <Description>Create a new trade</Description>
+      <Condition>request.verb = "POST" and proxy.pathsuffix MatchesPath "/trades"</Condition>
+    </Flow>
+    <Flow name="deleteTrade">
+      <Description>Delete a specific trade.</Description>
+      <Condition>request.verb = "DELETE" and proxy.pathsuffix MatchesPath "/trades/*"</Condition>
+    </Flow>
+    <Flow name="getTrade">
+      <Description/>
+      <Condition>request.verb = "GET" and proxy.pathsuffix MatchesPath "/trades/*"</Condition>
+    </Flow>
+    <Flow name="updateTrade">
+      <Description/>
+      <Condition>request.verb = "PUT" and proxy.pathsuffix MatchesPath "/trades/*"</Condition>
+    </Flow>
+    <Flow name="unsupported_operation">
+      <Description>Unsupported operation</Description>
+      <Request>
+        <Step>
+          <Name>RF-unknown-operation</Name>
+        </Step>
+      </Request>
+    </Flow>
+  </Flows>
+  <HTTPProxyConnection>
+    <BasePath>/energy-service</BasePath>
+  </HTTPProxyConnection>
+  <RouteRule name="default">
+    <TargetEndpoint>default</TargetEndpoint>
+  </RouteRule>
+</ProxyEndpoint>

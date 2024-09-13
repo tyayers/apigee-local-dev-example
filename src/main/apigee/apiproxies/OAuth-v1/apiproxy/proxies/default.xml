@@ -1,0 +1,18 @@
+<ProxyEndpoint name="default">
+  <Flows>    
+    <Flow name="token">
+      <Description/>
+      <Request>
+        <Step>
+          <Name>OAuthV2-GenerateToken</Name>
+        </Step>
+      </Request>
+      <Response/>
+      <Condition>(proxy.pathsuffix MatchesPath "/token") and (request.verb = "POST")</Condition>
+    </Flow>
+  </Flows>
+  <HTTPProxyConnection>
+    <BasePath>/oauth</BasePath>
+  </HTTPProxyConnection>
+  <RouteRule name="echo"/>
+</ProxyEndpoint>
