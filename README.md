@@ -22,6 +22,10 @@ After cloning this repository, run these commands to deploy and test the proxies
 # deploy the APIs to the emulator
 ./2.deploy.apis.sh
 
+# make a test API call
+curl -i http://localhost:8082/httpbin/get
+# should return 401 (unauthorized, no token sent)
+
 # deploy test product and app data to the emulator
 ./3.deploy.testdata.sh
 
@@ -29,8 +33,20 @@ After cloning this repository, run these commands to deploy and test the proxies
 curl http://localhost:8081/v1/emulator/tree
 # it should return both proxy names
 
+# test API with credentials
+CLIENT_KEY=$(curl http://localhost:8081/v1/emulator/test/developerapps | jq --raw-output '.[0].credentials.[0].consumerKey')
+CLIENT_SECRET=$(curl http://localhost:8081/v1/emulator/test/developerapps | jq --raw-output '.[0].credentials.[0].consumerSecret')
+TOKEN=$(curl -X POST http://0:8082/oauth/token \
+	-H "Content-Type: application/x-www-form-urlencoded" \
+	-d "grant_type=client_credentials" \
+	-d "client_id=$CLIENT_KEY" \
+	-d "client_secret=$CLIENT_SECRET" | jq --raw-output '.access_token')
+curl http://localhost:8082/httpbin/get -H "Authorization: Bearer $TOKEN"
+# should return get info from HttpBin.org, equivalent of calling `curl https://httpbin.org/get`
+
 # run bruno API tests
 ./4.test.apis.sh
+# the tests should run successfully, or see what is wrong in the error results.
 
 # reset emulator
 ./5.reset.apigee.emulator.sh
