@@ -1,0 +1,22 @@
+meta {
+  name: HttpBin Get
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/httpbin/get
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+tests {
+  test("should be able to get httpbin with token", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(200);
+  });
+}

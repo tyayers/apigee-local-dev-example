@@ -16,10 +16,10 @@
     "quota": "100",
     "quotaInterval": "1",
     "quotaTimeUnit": "minute",
-    "name": "energy-trading",
-    "displayName": "energy-trading",
+    "name": "httpbin_product",
+    "displayName": "httpbin_product",
     "proxies": [
-      "TradingAPI-v1"
+      "HttpBinAPI-v1"
     ]
   }
 ]

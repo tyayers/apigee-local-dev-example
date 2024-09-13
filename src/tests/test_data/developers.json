@@ -6,9 +6,9 @@
         "value": "sample_attribute_value_0"
       }
     ],
-    "email": "tyler.ayers@gmail.com",
-    "userName": "tyler",
-    "firstName": "Tyler",
-    "lastName": "Ayers"
+    "email": "test@example.com",
+    "userName": "testUser",
+    "firstName": "Test",
+    "lastName": "User"
   }
 ]

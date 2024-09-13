@@ -6,12 +6,12 @@
         "value": "sample_attribute_value_0"
       }
     ],
-    "developerEmail": "tyler.ayers@gmail.com",
+    "developerEmail": "test@example.com",
     "name": "mobile-app",
     "displayName": "mobile-app",
     "callbackUrl": "",
     "apiProducts": [
-      "energy-trading"
+      "httpbin_product"
     ],
     "expiryType": "never"
   }
