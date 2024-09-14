@@ -16,5 +16,18 @@ spec:
       containers:
       - image: energy-trading-service:latest
         name: energy-trading-service
+        imagePullPolicy: Never
         ports:
         - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: energy-trading-service
+spec:
+  selector:
+    app.kubernetes.io/name: energy-trading-service
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

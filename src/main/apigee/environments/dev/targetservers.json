@@ -3,8 +3,11 @@
     "enabled": true,
     "name": "energy-trading-service",
     "description": "energy-trading-service",
-    "host": "httpbin.org",
+    "host": "energy-trading-service",
     "protocol": "HTTP",
-    "port": 443
+    "port": 8080,
+    "tlsInfo": {
+        "enabled": false
+    }
   }
 ]
