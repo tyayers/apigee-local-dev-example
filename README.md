@@ -2,14 +2,13 @@
 This is an example Apigee local development environment using Minikube to run both the Apigee Emulator and a local microservice with APIs. No cloud services are used in this example.
 
 ## Getting started
-You can run this on a local linux system with Docker installed, or in the [Google Cloud Shell](https://shell.cloud.google.com), where Docker is installed by default.
+You can run this on a local linux system with Docker and minikube installed, or in the [Google Cloud Shell](https://shell.cloud.google.com), where everything is installed by default.
 
 After cloning this repository, run these instructions to walk through the local development process.
 
 ```sh
-# install minikube, if not already installed, as documented here: https://minikube.sigs.k8s.io/docs/start
-curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
+# start minikube on your local machine
+minikube start
 
 # build the energy-trading-service example microservice from the services/energy-trading-service-v1 directory
 cd services/energy-trading-service-v1
@@ -24,17 +23,14 @@ kubectl apply -f ./kubernetes/apigee.deployment.yaml
 kubectl apply -f ./kubernetes/energy.svc.deployment.yaml
 
 # now check the services to make sure that they are running
-kubectl get svc
-# WAIT and retry until you see the apigee-emulator and energy-trading-service running
+kubectl get pod
+# WAIT and retry until the apigee-emulator and energy-trading-service pods are running
 
-# get the svc url to reach the apigee-emulator
-minikube service apigee-emulator --url
-# the two URLs are the endpoints to reach the apigee emulator
-
-# set the env variable APIGEE_CTL to the first URL
-# set the env variable APIGEE_HOST to the second URL
-APIGEE_CTL=http://192.168.49.2:31623
-APIGEE_HOST=http://192.168.49.2:30256
+# get the svc url endpoints to reach the apigee-emulator
+APIGEE_URLS=$(minikube service apigee-emulator --url)
+APIGEE_URLS=($APIGEE_URLS)
+APIGEE_CTL=${APIGEE_URLS[0]}
+APIGEE_HOST=${APIGEE_URLS[1]}
 
 # zip the src proxy directory and upload to the apigee-emulator
 zip -r deployment.zip src
@@ -74,6 +70,13 @@ TOKEN=$(curl -X POST "$APIGEE_HOST/oauth/token" \
 # call energy-service/trades with OAuth token
 curl "$APIGEE_HOST/energy-service/trades" -H "Authorization: Bearer $TOKEN"
 # you should get the test trades data returned from our python microservice
+
+# run bruno tests
+npm install -g @usebruno/cli
+cd tests/bruno
+bru run --env local --env-var client_id=$CLIENT_KEY --env-var client_secret=$CLIENT_SECRET --env-var baseUrl=$APIGEE_HOST
+cd ../..
+# you should see 3 tests passed for OAuth get token and get trades
 
 # stop minikube
 minikube stop
