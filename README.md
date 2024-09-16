@@ -1,4 +1,6 @@
 # Apigee Local Development Minikube Example
+✨✨ A simpler version of this project is in the [http-bin-example branch](https://github.com/tyayers/apigee-local-dev-example/tree/http-bin-example) with just a single container calling the httpbin.org endpoint (no minikube or microservice needed).
+
 This is an example Apigee local development environment using Minikube to run both the Apigee Emulator and a local microservice with APIs. No cloud services are used in this example.
 
 ## Getting started
